@@ -459,7 +459,7 @@
       .replace(/ +/g, ' ')
       .replace(/\n(\s*)\n|\n(\t*)\n/g, '\n')
       .replace(/\n /g, '\n');
-      // .replace(/（税抜.*）|（税込.*）/g, '');
+    // .replace(/（税抜.*）|（税込.*）/g, '');
   };
 
   // メニューHTML組み立て関数
@@ -522,7 +522,6 @@
   document.body.appendChild(modalWrapper);
 
   // 必要なパーツ取得
-  // TODO 各データ個別のArrayになっているので一つにまとめる
   const btnGet = document.getElementById('btnGet');
   const btnCopy = document.getElementById('btnCopy');
   const isMenuSubText = document.getElementById('isMenuSubText');
@@ -539,13 +538,13 @@
   let menuSubText = document.querySelectorAll(menuSubTextSelector);
   let menuPrice = document.querySelectorAll(menuPriceSelector);
   let menuTitle = `\n<h2>${SETTING[target].MENU_TITLE}</h2>\n`;
-
+  // TODO 各データ個別のArrayになっているので一つにまとめる
   // データ用配列作成
-  let dataArray = [
-    new Array(menuName.length),
-    new Array(menuName.length),
-    new Array(menuName.length),
-  ];
+  // let dataArray = [
+  //   new Array(menuName.length),
+  //   new Array(menuName.length),
+  //   new Array(menuName.length),
+  // ];
   // dataArray[0] = [];
   // dataArray[1] = [];
   // dataArray[2] = [];
@@ -569,7 +568,7 @@
   const addBlankElements = () => {
     if (target === '2') { // ホットペッパーグルメの料理（空の説明文要素送り込み）
       let icon = document.querySelectorAll('.icon'); //アイコンが邪魔なので消す
-      for(let i = 0; i < icon.length; i++){
+      for (let i = 0; i < icon.length; i++) {
         icon[i].remove();
       }
       let menuTable = document.querySelectorAll(menuTableClass);
@@ -589,7 +588,7 @@
           menuNameWrapper[i].insertAdjacentHTML('afterend', '<p class="rstdtl-menu-lst__ex"></p>');
         }
       }
-    }  else if (target === '6') { //ヒトサラ（空の価格要素、説明文送り込み）
+    } else if (target === '6') { //ヒトサラ（空の価格要素、説明文送り込み）
       let menuName = document.querySelectorAll(menuNameSelector);
       let menuNameWrapper = document.querySelectorAll(`${menuTableClass} .txt`);
       for (let i = 0; i < calcRowSize(); i++) {
