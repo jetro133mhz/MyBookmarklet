@@ -549,14 +549,14 @@
   // dataArray[0] = [];
   // dataArray[1] = [];
   // dataArray[2] = [];
-  {
-    for (let i = 0; i < menuName.length; i++) {
-      dataArray[0][i] = menuName[i];
-      dataArray[1][i] = menuSubText[i];
-      dataArray[2][i] = menuPrice[i];
-    }
-    console.log(dataArray);
-  }
+  // {
+  //   for (let i = 0; i < menuName.length; i++) {
+  //     dataArray[0][i] = menuName[i];
+  //     dataArray[1][i] = menuSubText[i];
+  //     dataArray[2][i] = menuPrice[i];
+  //   }
+  //   console.log(dataArray);
+  // }
 
   // テーブル行数計算
   const calcRowSize = () => {
@@ -628,9 +628,6 @@
   };
   checkData();
 
-  // 説明文が取れないサイトはチェックボックスを無効化（ホットペッパーの料理と食べログ）
-  // 説明文の要素があったりなかったりでエラーになる。
-  // 事前に構造をチェックして、構造が異なっている場合は空要素を送り込んでメニューの項目数と合わせ込んで取れるようにする予定。
   // const menuSubTextDisable = () => {
   //   isMenuSubText.disabled = Boolean(target === '2' || target === '4');
   //   if (target === '2' || target === '4') {

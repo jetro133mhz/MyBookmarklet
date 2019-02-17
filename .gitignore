@@ -6,3 +6,11 @@ js/test.js
 js/modal.html
 js/minify/publishCode.min.js
 js/minify/publishCode.js
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
