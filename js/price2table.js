@@ -462,7 +462,7 @@
     // .replace(/（税抜.*）|（税込.*）/g, '');
   };
 
-  // メニューHTML組み立て関数
+  // メニュー用HTML組み立て関数
   // TODO 中見出しを挿入できるようにする
   const buildMenuTable = () => {
     let tableData = '';
@@ -557,17 +557,17 @@
   //   console.log(dataArray);
   // }
 
-  // テーブル行数計算
+  // 必要なテーブル行数の計算
   const calcRowSize = () => {
     let rowSize = (menuName.length >= menuSubText.length) ? menuName.length : menuSubText.length;
     rowSize = (rowSize >= menuPrice.length) ? rowSize : menuPrice.length;
     return rowSize;
   };
 
-  // 下準備 空の要素を送り込んで各項目数を合わせる
+  // 空要素を送り込んで各項目数を合わせる
   const addBlankElements = () => {
     if (target === '2') { // ホットペッパーグルメの料理（空の説明文要素送り込み）
-      let icon = document.querySelectorAll('.icon'); //アイコンが邪魔なので消す
+      let icon = document.querySelectorAll('.icon'); //アイコンが計算の邪魔になるので消す
       for (let i = 0; i < icon.length; i++) {
         icon[i].remove();
       }
@@ -577,7 +577,7 @@
           menuTable[i].insertAdjacentHTML('afterend', '<p class="catch"></p>');
         }
       }
-    } else if (target === '4') { //食べログ（空の価格要素、説明文送り込み）
+    } else if (target === '4') { //食べログ（空の価格・説明文要素送り込み）
       let menuName = document.querySelectorAll(menuNameSelector);
       let menuNameWrapper = document.querySelectorAll(`${menuTableClass} .rstdtl-menu-lst__info-inner`);
       for (let i = 0; i < calcRowSize(); i++) {
@@ -588,7 +588,7 @@
           menuNameWrapper[i].insertAdjacentHTML('afterend', '<p class="rstdtl-menu-lst__ex"></p>');
         }
       }
-    } else if (target === '6') { //ヒトサラ（空の価格要素、説明文送り込み）
+    } else if (target === '6') { //ヒトサラ（空の価格・説明文要素送り込み）
       let menuName = document.querySelectorAll(menuNameSelector);
       let menuNameWrapper = document.querySelectorAll(`${menuTableClass} .txt`);
       for (let i = 0; i < calcRowSize(); i++) {
@@ -600,7 +600,7 @@
         }
       }
     }
-    // 送り込んだ要素を含めて取得し直し
+    // 送り込んだ空要素を含めて各項目再取得
     menuName = document.querySelectorAll(menuNameSelector);
     menuSubText = document.querySelectorAll(menuSubTextSelector);
     menuPrice = document.querySelectorAll(menuPriceSelector);
@@ -610,7 +610,7 @@
   console.log(menuSubText.length);
   console.log(menuPrice.length);
 
-  // データの個数チェック
+  // メニューの個数チェック
   const notification = document.getElementById('notification');
   const checkData = () => {
     if (calcRowSize() === 0) {
@@ -635,7 +635,7 @@
   // };
   // menuSubTextDisable();
 
-  //セレクタが変わった際パラメーターを入れ直す
+  //セレクタが変わった際各項目を取得し直す
   targetSite.addEventListener('change', () => {
     if (hasGet === true) {
       return;
@@ -658,7 +658,7 @@
     console.log(menuPrice.length);
   });
 
-  // 表示エリアに書き込み
+  // 表示エリアにHTML書き込み
   const sourceCode = document.getElementById('sourceCode');
 
   btnGet.addEventListener('click', () => {
@@ -677,7 +677,7 @@
     }
   });
 
-  // HTMLコピー
+  // HTMLをクリップビードへコピー
   const execCopy = (string) => {
     let tmp = document.createElement('div');
     let pre = document.createElement('pre');
@@ -708,7 +708,7 @@
     // menuSubTextDisable();
   });
 
-  // クリア
+  // クリアボタン
   const btnClear = document.getElementById('btnClear');
   btnClear.addEventListener('click', () => {
     if (hasGet === false) {
@@ -723,7 +723,7 @@
     // menuSubTextDisable();
   });
 
-  // 閉じる
+  // 閉じるボタン
   const closeBtn = document.getElementById('closeBtn');
   closeBtn.addEventListener('click', () => {
     modalWrapper.remove();
