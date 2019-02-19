@@ -1,5 +1,5 @@
-(() => {
-  'use strict';
+'use strict';
+{
   // モーダルHTML
   const TEMPLATE = `
 <style>
@@ -84,7 +84,7 @@
 
   .targetSiteWrapper:after {
     content: '\\e5c5';
-    font-family: "Material Icons";
+    font-family: "Material Icons",sans-serif;
     color: rgb(16,108,200);
     font-size:24px;
     position: absolute;
@@ -148,7 +148,7 @@
 
   .isMenuSubText-parts:before, .useBr-parts:before {
     content: "\\e835";
-    font-family: "Material Icons";
+    font-family: "Material Icons",sans-serif;
     font-size: 24px;
     display: block;
     position: absolute;
@@ -162,7 +162,7 @@
 
   #isMenuSubText:checked + .isMenuSubText-parts:before, #useBr:checked + .useBr-parts:before {
     content: "\\e834";
-    font-family: 'Material Icons';
+    font-family: 'Material Icons',sans-serif;
     color: rgb(255,82,82);
     display: block;
     position: absolute;
@@ -205,7 +205,7 @@
 
   #notification.notificationAlert :before{
     content: '\\e001';
-    font-family: "Material Icons";
+    font-family: "Material Icons",sans-serif;
     font-size: 20px;
     position: absolute;
     left: 0;
@@ -217,7 +217,7 @@
 
   #notification.notificationReady :before{
     content: '\\e876';
-    font-family: "Material Icons";
+    font-family: "Material Icons",sans-serif;
     font-size: 20px;
     position: absolute;
     left: 0;
@@ -245,7 +245,7 @@
   }
   #btnGet span:before {
     content: '\\e884';
-    font-family: 'Material Icons';
+    font-family: 'Material Icons',sans-serif;
     font-size: 20px;
     position: absolute;
     left: 0;
@@ -305,7 +305,7 @@
 
   #btnCopy span:before{
     content: '\\e14d';
-    font-family: 'Material Icons';
+    font-family: 'Material Icons',sans-serif;
     font-size: 18px;
     position: absolute;
     left: 0;
@@ -396,49 +396,49 @@
   // 6:ヒトサラ
   const SETTING = [
     {
-      MENU_TITLE: 'クーポン',
+      MENU_TITLE: 'ホットペッパービューティー クーポン',
       MENU_WRAPPER: '.couponTbl',
       MENU_NAME: '.couponMenuName',
       MENU_SUBTEXT: 'p.wbba',
       MENU_PRICE: '.wwbw',
     },
     {
-      MENU_TITLE: 'メニュー',
+      MENU_TITLE: 'ホットペッパービューティー メニュー',
       MENU_WRAPPER: '.menuTbl',
       MENU_NAME: '.couponMenuName',
       MENU_SUBTEXT: 'p.wbba',
       MENU_PRICE: '.wwbw',
     },
     {
-      MENU_TITLE: 'メニュー',
+      MENU_TITLE: 'ホットペッパーグルメ 料理メニュー',
       MENU_WRAPPER: '.menu',
       MENU_NAME: '.firstChild',
       MENU_SUBTEXT: '+ .catch',
       MENU_PRICE: '.price',
     },
     {
-      MENU_TITLE: 'メニュー',
+      MENU_TITLE: 'ホットペッパーグルメ ドリンクメニュー',
       MENU_WRAPPER: '.shopInner',
       MENU_NAME: '>h3:first-child, dl.price + h3, h2 + h3',
       MENU_SUBTEXT: 'dl.price dt',
       MENU_PRICE: 'dl.price dd',
     },
     {
-      MENU_TITLE: 'メニュー',
+      MENU_TITLE: '食べログ メニュー',
       MENU_WRAPPER: '.rstdtl-menu-lst__contents',
       MENU_NAME: '.rstdtl-menu-lst__menu-title',
       MENU_SUBTEXT: '.rstdtl-menu-lst__ex',
       MENU_PRICE: '.rstdtl-menu-lst__price',
     },
     {
-      MENU_TITLE: 'メニュー',
+      MENU_TITLE: 'ぐるなび メニュー',
       MENU_WRAPPER: '.menu',
       MENU_NAME: '.menu-term',
       MENU_SUBTEXT: '.menu-desc',
       MENU_PRICE: '.menu-price',
     },
     {
-      MENU_TITLE: 'メニュー',
+      MENU_TITLE: 'ヒトサラ メニュー',
       MENU_WRAPPER: '.menu_bx',
       MENU_NAME: '.name',
       MENU_SUBTEXT: '.desc',
@@ -527,17 +527,37 @@
   const isMenuSubText = document.getElementById('isMenuSubText');
   const useBr = document.getElementById('useBr');
   const targetSite = document.getElementById('targetSite');
+
+  //URLを取得してセレクトメニューを自動的に選んでおく
+  const url = window.location.href;
+  if (url.indexOf('beauty.hotpepper') !== -1) {
+    targetSite.value = 0;
+  } else if (url.match(/hotpepper\.jp\/.*\/food\//)) {
+    targetSite.value = 2;
+  } else if (url.match(/hotpepper\.jp\/.*\/drink\//) || url.match(/www.hotpepper\.jp\/.*\/lunch\//)) {
+    targetSite.value = 3;
+  } else if (url.indexOf('tabelog') !== -1) {
+    targetSite.value = 4;
+  } else if (url.indexOf('gnavi') !== -1) {
+    targetSite.value = 5;
+  } else if (url.indexOf('gnavi') !== -1) {
+    targetSite.value = 5;
+  } else if (url.indexOf('hitosara') !== -1) {
+    targetSite.value = 6;
+  }
+
+  // 各要素を取得
   let target = targetSite.value;
   let menuTableClass = SETTING[target].MENU_WRAPPER;
   let menuNameSelector = `${menuTableClass} ${SETTING[target].MENU_NAME}`;
   let menuSubTextSelector = `${menuTableClass} ${SETTING[target].MENU_SUBTEXT}`;
   let menuPriceSelector = `${menuTableClass} ${SETTING[target].MENU_PRICE}`;
-  let hasGet = false;
-
   let menuName = document.querySelectorAll(menuNameSelector);
   let menuSubText = document.querySelectorAll(menuSubTextSelector);
   let menuPrice = document.querySelectorAll(menuPriceSelector);
   let menuTitle = `\n<h2>${SETTING[target].MENU_TITLE}</h2>\n`;
+  let hasGet = false;
+
   // TODO 各データ個別のArrayになっているので一つにまとめる
   // データ用配列作成
   // let dataArray = [
@@ -732,4 +752,4 @@
   bgCover.addEventListener('click', () => {
     closeBtn.click();
   })
-})();
+}
