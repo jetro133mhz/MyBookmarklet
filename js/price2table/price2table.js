@@ -200,7 +200,7 @@
     font-weight: bold!important;
   }
   #notification.notificationAlert {
-    color: ff7070;
+    color: #ff7070;
   }
 
   #notification.notificationAlert :before{
