@@ -366,6 +366,7 @@
       <option value="4">食べログ（料理・ドリンク・ランチ）</option>
       <option value="5">ぐるなび</option>
       <option value="6">ヒトサラ</option>
+      <option value="7">一休.com</option>
     </select>
   </div>
   <table>
@@ -394,6 +395,7 @@
   // 4:食べログ
   // 5:ぐるなび
   // 6:ヒトサラ
+  // 7:一休.com
   const SETTING = [
     {
       MENU_TITLE: 'ホットペッパービューティー クーポン',
@@ -443,6 +445,13 @@
       MENU_NAME: '.name',
       MENU_SUBTEXT: '.desc',
       MENU_PRICE: '.price',
+    },
+    {
+      MENU_TITLE: '一休.com メニュー',
+      MENU_WRAPPER: '.TR2h4c9',
+      MENU_NAME: '._1APf_sX',
+      MENU_SUBTEXT: '',
+      MENU_PRICE: '._1UvmTD9, ._2Y2gD8f',
     },
   ];
 
@@ -544,6 +553,8 @@
     targetSite.value = 5;
   } else if (url.indexOf('hitosara') !== -1) {
     targetSite.value = 6;
+  }else if (url.indexOf('ikyu.com') !== -1) {
+    targetSite.value = 7;
   }
 
   // 各要素を取得
@@ -647,13 +658,14 @@
   };
   checkData();
 
-  // const menuSubTextDisable = () => {
-  //   isMenuSubText.disabled = Boolean(target === '2' || target === '4');
-  //   if (target === '2' || target === '4') {
-  //     isMenuSubText.checked = false;
-  //   }
-  // };
-  // menuSubTextDisable();
+  // 特定サイトだけメニュー説明分無効化
+  const menuSubTextDisable = () => {
+    isMenuSubText.disabled = Boolean(target === '7');
+    if (target === '7') {
+      isMenuSubText.checked = false;
+    }
+  };
+  menuSubTextDisable();
 
   //セレクタが変わった際各項目を取得し直す
   targetSite.addEventListener('change', () => {
@@ -740,7 +752,7 @@
     targetSite.disabled = false;
     isMenuSubText.disabled = false;
     sourceCode.innerHTML = '';
-    // menuSubTextDisable();
+    menuSubTextDisable();
   });
 
   // 閉じるボタン
