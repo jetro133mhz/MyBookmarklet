@@ -51,6 +51,8 @@
     font-size: 20px;
     padding: 0;
     margin: 0 0 20px;
+    background: none;
+    position: static;
   }
 
   .targetSiteWrapper {
@@ -553,7 +555,7 @@
     targetSite.value = 5;
   } else if (url.indexOf('hitosara') !== -1) {
     targetSite.value = 6;
-  }else if (url.indexOf('ikyu.com') !== -1) {
+  } else if (url.indexOf('ikyu.com') !== -1) {
     targetSite.value = 7;
   }
 
@@ -569,35 +571,16 @@
   let menuTitle = `\n<h2>${SETTING[target].MENU_TITLE}</h2>\n`;
   let hasGet = false;
 
-  // TODO 各データ個別のArrayになっているので一つにまとめる
-  // データ用配列作成
-  // let dataArray = [
-  //   new Array(menuName.length),
-  //   new Array(menuName.length),
-  //   new Array(menuName.length),
-  // ];
-  // dataArray[0] = [];
-  // dataArray[1] = [];
-  // dataArray[2] = [];
-  // {
-  //   for (let i = 0; i < menuName.length; i++) {
-  //     dataArray[0][i] = menuName[i];
-  //     dataArray[1][i] = menuSubText[i];
-  //     dataArray[2][i] = menuPrice[i];
-  //   }
-  //   console.log(dataArray);
-  // }
-
-  // 必要なテーブル行数の計算
+  // 必要なテーブル行数の計算（メニュー名と価格の項目数を比べて、大きい方の値をテーブル行数とする）
   const calcRowSize = () => {
     let rowSize = (menuName.length >= menuSubText.length) ? menuName.length : menuSubText.length;
     rowSize = (rowSize >= menuPrice.length) ? rowSize : menuPrice.length;
     return rowSize;
   };
 
-  // 空要素を送り込んで各項目数を合わせる
+  // メニュー名、説明文、価格のHTML要素が無い場合がある。それでは計算が難しいので、要素が無い箇所には空要素を送り込んですべての項目が同じ数になるよう合わせ込む。
   const addBlankElements = () => {
-    if (target === '2') { // ホットペッパーグルメの料理（空の説明文要素送り込み）
+    if (target === '2') { // ホットペッパーグルメの料理（空の説明文要素を送り込み）
       let icon = document.querySelectorAll('.icon'); //アイコンが計算の邪魔になるので消す
       for (let i = 0; i < icon.length; i++) {
         icon[i].remove();
@@ -631,18 +614,18 @@
         }
       }
     }
-    // 送り込んだ空要素を含めて各項目再取得
+    // 送り込んだ空要素を含めて各項目を再度取得し直す
     menuName = document.querySelectorAll(menuNameSelector);
     menuSubText = document.querySelectorAll(menuSubTextSelector);
     menuPrice = document.querySelectorAll(menuPriceSelector);
   };
   addBlankElements();
-  console.log(menuName.length);
+  console.log(menuName.length); //メニュー名・説明文・価格の項目数がすべて同じ数で取得できているか確認する
   console.log(menuSubText.length);
   console.log(menuPrice.length);
 
   // メニューの個数チェック
-  const notification = document.getElementById('notification');
+  const notification = document.getElementById('notification'); //取得可否メッセージ表示エリア
   const checkData = () => {
     if (calcRowSize() === 0) {
       notification.innerHTML = `<span>メニューが取得出来ません。セレクトボックスからサイトを選んでください。</span>`;
@@ -658,7 +641,7 @@
   };
   checkData();
 
-  // 特定サイトだけメニュー説明分無効化
+  // 特定サイトはメニューの説明文を無効化（そもそも存在しないので選択できないようにする）
   const menuSubTextDisable = () => {
     isMenuSubText.disabled = Boolean(target === '7');
     if (target === '7') {
@@ -667,7 +650,7 @@
   };
   menuSubTextDisable();
 
-  //セレクタが変わった際各項目を取得し直す
+  //対象サイトを選択し直した際に各項目を取得し直す
   targetSite.addEventListener('change', () => {
     if (hasGet === true) {
       return;
